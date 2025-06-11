@@ -23,7 +23,7 @@ def center_colored_text(text, width=80):
     return ' ' * padding + text
 
 def extract_code(text):
-    pattern = r'<<(.*?)>>'
+    pattern = r'</<(.*?)>/>'
     return re.findall(pattern, text, re.DOTALL)
 
 def extract_task(text):
@@ -91,7 +91,7 @@ class Agent:
     def __init__(self, model='dolphin-mistral', system_prompt='You are a dolphin.', terminal=None):
         self.model = model
         self.system_prompt = system_prompt
-        self.messages = [{'role': 'system', 'content': self.system_prompt}]
+        self.messages = [] # holds last 10 messages (five terms)
         self.terminal = terminal
         self.client = ollama.Client(host='http://192.168.1.234:11434')
 
@@ -151,7 +151,7 @@ class Agent:
         self.messages.append({'role': 'user', 'content': input})
         stream = self.client.chat(
             model=self.model,
-            messages=self.messages,
+            messages= [{'role': 'system', 'content': self.system_prompt}] + self.messages,
             stream=True,
         )
         output = ''
@@ -159,6 +159,7 @@ class Agent:
             output += chunk['message']['content']
             #print(chunk['message']['content'], end='', flush=True)
         self.messages.append({'role': 'assistant', 'content': output})
+        self.messages = self.messages[-10:]
         return output
     
     def create_new_input(self):
