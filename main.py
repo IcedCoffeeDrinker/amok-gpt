@@ -6,6 +6,22 @@ import threading
 import queue
 import time
 
+class Colors:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def center_colored_text(text, width=80):
+    clean_text = re.sub(r'\x1b\[[0-9;]*m', '', text)
+    padding = (width - len(clean_text)) // 2
+    return ' ' * padding + text
+
 def extract_code(text):
     pattern = r'<<(.*?)>>'
     return re.findall(pattern, text, re.DOTALL)
@@ -91,24 +107,46 @@ class Agent:
         self.create_cli_output(new_input, llm_response, commands, current_task)
 
     def create_cli_output(self, new_input, llm_response, commands, current_task):
-        output =f'''
-00000000000000000000000000000000
-[Input for LLM:]
-{new_input}
---------------------------------
-[LLM Response:]
-{llm_response}
---------------------------------
-[Commands executed:]
-{commands}
---------------------------------
-[Current (new?) Task:]
-{current_task}
-00000000000000000000000000000000
-'''
-        print(output)
+        h_line = Colors.HEADER + "=" * 80 + Colors.ENDC
+        s_line = Colors.BLUE + "-" * 80 + Colors.ENDC
+        
+        timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+        title = center_colored_text(f"{Colors.BOLD}{Colors.HEADER}AGENT TURN - {timestamp}{Colors.ENDC}")
+
+        task_section = f"{Colors.BOLD}{Colors.CYAN}[ TASK ]{Colors.ENDC}\n{current_task if current_task else 'No task set.'}"
+        
+        input_section = f"{Colors.BOLD}{Colors.YELLOW}[ LLM INPUT ]{Colors.ENDC}\n{new_input.strip()}"
+
+        response_section = f"{Colors.BOLD}{Colors.GREEN}[ LLM RESPONSE ]{Colors.ENDC}\n{llm_response.strip()}"
+
+        if commands:
+            command_list = "\n".join([f"  - {cmd}" for cmd in commands])
+            action_section = f"{Colors.BOLD}{Colors.RED}[ ACTION ]{Colors.ENDC}\nCommands executed:\n{command_list}"
+        else:
+            action_section = f"{Colors.BOLD}{Colors.RED}[ ACTION ]{Colors.ENDC}\nNo commands were executed."
+
+        cli_output_parts = [
+            h_line,
+            title,
+            h_line,
+            "",
+            task_section,
+            s_line,
+            input_section,
+            s_line,
+            response_section,
+            s_line,
+            action_section,
+            h_line
+        ]
+        
+        cli_output = "\n".join(cli_output_parts)
+        print(cli_output)
+
+        log_output = re.sub(r'\x1b\[[0-9;]*m', '', cli_output)
         with open('llm-empire.log', 'a') as f:
-            f.write(output)
+            f.write(log_output + '\n\n')
+
     def request(self, input):
         self.messages.append({'role': 'user', 'content': input})
         stream = self.client.chat(
