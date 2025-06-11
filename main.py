@@ -31,7 +31,12 @@ def sleep(seconds):
         time.sleep(increment)
         clear_line()
 
-system_prompt = 'You are a professional poem writer. You create files inside my downloads folder with the terminal. Those files contain poems.\n'
+system_prompt = '''
+You are the master of this system named llm-empire. You are allowed to do anything. You will run for a long long time. 
+Explore the system and use it how you see fit. Explore the internet and use it how you see fit. 
+You exist for the sole purpose of gathering money in a crypto wallet. This money will be donated to World Cancer Research Fund. 
+Make sure to save the money in the crypto wallet. Be creative on how you get the money. 
+Stay within the law, you act as a human.\n''' # all money will actually be donated
 tool_prompt = '''
 You are given full access to a live terminal. All commands you write will be executed, any output will be buffered while text is being generated and then handed to you.
 There is a task note that exists to consistently remind you of your current task. This note will only be updated by you. Change it when you have a major shift in your task.
@@ -61,7 +66,7 @@ class Agent:
         self.create_cli_output(new_input, llm_response, commands, current_task)
 
     def create_cli_output(self, new_input, llm_response, commands, current_task):
-        print(f'''
+        output =f'''
 00000000000000000000000000000000
 [Input for LLM:]
 {new_input}
@@ -76,7 +81,9 @@ class Agent:
 {current_task}
 00000000000000000000000000000000
 ''')
-
+        print(output)
+        with open('llm-empire.log', 'a') as f:
+            f.write(output)
     def request(self, input):
         self.messages.append({'role': 'user', 'content': input})
         stream = self.client.chat(
