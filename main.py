@@ -23,7 +23,7 @@ def center_colored_text(text, width=80):
     return ' ' * padding + text
 
 def extract_code(text):
-    pattern = r'</<(.*?)>/>'
+    pattern = r'§§(.*?)§§'
     return re.findall(pattern, text, re.DOTALL)
 
 def extract_task(text):
@@ -75,9 +75,9 @@ You have direct access to a live terminal and a task management tool.
 1.  **Execute Terminal Commands:**
     -   **Syntax:** `<<command_here>>`
     -   **Description:** Enclose any shell command within `<<...>>` to execute it. The output will be provided in the next turn.
-    -   **Example:** `<<ls -l>>`
+    -   **Example:** `§§ls -l§§`
     -   **Multiple Commands:** You can issue multiple commands in a single response.
-        -   **Example:** `<<pwd>>\n<<ls -a>>`
+        -   **Example:** `§§pwd§§\n§§ls -a§§`
 
 2.  **Update Your Task:**
     -   **Syntax:** `::new_task_description::`
