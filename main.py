@@ -99,7 +99,7 @@ class Agent:
         new_input = self.create_new_input()
         llm_response = self.request(new_input)
         if extract_task(llm_response):
-            print(f'New Task: {current_task}')
+            #print(f'New Task: {current_task}')
         commands = extract_code(llm_response)
         if commands:
             for command in commands:
