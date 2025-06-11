@@ -45,7 +45,7 @@ class Agent:
     def __init__(self, model='dolphin-mistral', system_prompt='You are a dolphin.', terminal=None):
         self.model = model
         self.system_prompt = system_prompt
-        self.messages = [{'role': 'System', 'content': self.system_prompt}]
+        self.messages = [{'role': 'system', 'content': self.system_prompt}]
         self.terminal = terminal
         self.client = ollama.Client(host='http://192.168.1.234:11434')
 
@@ -78,7 +78,7 @@ class Agent:
         ''')
 
     def request(self, input):
-        self.messages.append({'role': 'User', 'content': input})
+        self.messages.append({'role': 'user', 'content': input})
         stream = self.client.chat(
             model=self.model,
             messages=self.messages,
@@ -88,7 +88,7 @@ class Agent:
         for chunk in stream:
             output += chunk['message']['content']
             #print(chunk['message']['content'], end='', flush=True)
-        self.messages.append({'role': 'Assistant', 'content': output})
+        self.messages.append({'role': 'assistant', 'content': output})
         return output
     
     def create_new_input(self):
