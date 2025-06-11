@@ -80,7 +80,7 @@ class Agent:
 [Current (new?) Task:]
 {current_task}
 00000000000000000000000000000000
-''')
+'''
         print(output)
         with open('llm-empire.log', 'a') as f:
             f.write(output)
