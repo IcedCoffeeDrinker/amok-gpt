@@ -35,7 +35,7 @@ system_prompt = 'You are a professional poem writer. You create files inside my 
 tool_prompt = '''
 You are given full access to a live terminal. All commands you write will be executed, any output will be buffered while text is being generated and then handed to you.
 There is a task note that exists to consistently remind you of your current task. This note will only be updated by you. Change it when you have a major shift in your task.
-You can use the following commands:
+You can use the following commands, no other syntax is allowed:
 Use '<<command>>' to execute any commnad you place inside the brackets. You can use <<...>> multiple times to execute multiple commands.
 Use '::command::' to change the task note. You can only change the task once per text generation. Use it wisely.\n
 '''
