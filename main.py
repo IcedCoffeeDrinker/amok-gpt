@@ -73,8 +73,8 @@ You have direct access to a live terminal and a task management tool.
 **TOOLS & SYNTAX:**
 
 1.  **Execute Terminal Commands:**
-    -   **Syntax:** `<<command_here>>`
-    -   **Description:** Enclose any shell command within `<<...>>` to execute it. The output will be provided in the next turn.
+    -   **Syntax:** `§§command_here§§`
+    -   **Description:** Enclose any shell command within `§§...§§` to execute it. The output will be provided in the next turn.
     -   **Example:** `§§ls -l§§`
     -   **Multiple Commands:** You can issue multiple commands in a single response.
         -   **Example:** `§§pwd§§\n§§ls -a§§`
