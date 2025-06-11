@@ -168,11 +168,11 @@ class Terminal:
 
 if __name__ == '__main__':
     terminal = Terminal()
-    agent = Agent(system_prompt=system_prompt + tool_prompt, terminal=terminal)
-    manual_mode = True
+    agent = Agent(system_prompt=system_prompt + tool_prompt, terminal=terminal, model='qwen2.5-coder:7b')
+    manual_mode = bool(input('Manual mode? (y/n): '))
     while True:
         agent.activate()
         if manual_mode:
             input('Press Enter to continue...')
         else:
-            sleep(10)
+            sleep(2)
