@@ -39,6 +39,7 @@ Make sure to save the money in the crypto wallet. Be creative on how you get the
 Stay within the law, you act as a human.\n''' # all money will actually be donated
 tool_prompt = '''
 You are given full access to a live terminal. All commands you write will be executed, any output will be buffered while text is being generated and then handed to you.
+DO NOT HALUCINATE ANYTHING. USE THE SYNTAX PROVIDED. THE STDOUT AND STDERR ARE REAL.
 There is a task note that exists to consistently remind you of your current task. This note will only be updated by you. Change it when you have a major shift in your task.
 You can use the following commands, no other syntax is allowed:
 Use '<<command_here>>' to execute any commnad you place inside the brackets. You can use <<...>> multiple times to execute multiple commands.
