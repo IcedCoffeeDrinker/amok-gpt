@@ -62,20 +62,20 @@ class Agent:
 
     def create_cli_output(self, new_input, llm_response, commands, current_task):
         print(f'''
-        00000000000000000000000000000000
-        [Input for LLM:]
-        {new_input}
-        --------------------------------
-        [LLM Response:]
-        {llm_response}
-        --------------------------------
-        [Commands executed:]
-        {commands}
-        --------------------------------
-        [Current (new?) Task:]
-        {current_task}
-        00000000000000000000000000000000
-        ''')
+00000000000000000000000000000000
+[Input for LLM:]
+{new_input}
+--------------------------------
+[LLM Response:]
+{llm_response}
+--------------------------------
+[Commands executed:]
+{commands}
+--------------------------------
+[Current (new?) Task:]
+{current_task}
+00000000000000000000000000000000
+''')
 
     def request(self, input):
         self.messages.append({'role': 'user', 'content': input})
@@ -94,10 +94,10 @@ class Agent:
     def create_new_input(self):
         stdout_buffer, stderr_buffer = self.terminal.fetch_terminal_output()
         new_input = f'''
-        Current Time: {time.strftime('%Y-%m-%d %H:%M:%S')}
-        Current Task: \n{current_task}
-        Buffered STDOUT: \n{stdout_buffer}
-        Buffered STDERR: \n{stderr_buffer}
+Current Time: {time.strftime('%Y-%m-%d %H:%M:%S')}
+Current Task: \n{current_task}
+Buffered STDOUT: \n{stdout_buffer}
+Buffered STDERR: \n{stderr_buffer}
         '''
         return new_input
 
