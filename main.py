@@ -41,8 +41,8 @@ tool_prompt = '''
 You are given full access to a live terminal. All commands you write will be executed, any output will be buffered while text is being generated and then handed to you.
 There is a task note that exists to consistently remind you of your current task. This note will only be updated by you. Change it when you have a major shift in your task.
 You can use the following commands, no other syntax is allowed:
-Use '<<command>>' to execute any commnad you place inside the brackets. You can use <<...>> multiple times to execute multiple commands.
-Use '::command::' to change the task note. You can only change the task once per text generation. Use it wisely.\n
+Use '<<command_here>>' to execute any commnad you place inside the brackets. You can use <<...>> multiple times to execute multiple commands.
+Use '::task_here::' to change the task note. You can only change the task once per text generation. Use it wisely.\n
 '''
 current_task = ''
 
@@ -101,10 +101,12 @@ class Agent:
     def create_new_input(self):
         stdout_buffer, stderr_buffer = self.terminal.fetch_terminal_output()
         new_input = f'''
+This is the current state of the system:
 Current Time: {time.strftime('%Y-%m-%d %H:%M:%S')}
 Current Task: \n{current_task}
 Buffered STDOUT: \n{stdout_buffer}
 Buffered STDERR: \n{stderr_buffer}
+Please continue on your mission.
         '''
         return new_input
 
